@@ -47,3 +47,15 @@ export const TrashIcon: React.FC = () => (
         <path strokeLinecap="round" strokeLinejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
     </svg>
 );
+
+export const LikeIcon: React.FC = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+        <path d="M2 10.5a1.5 1.5 0 113 0v6a1.5 1.5 0 01-3 0v-6zM6 10.333V17a1 1 0 001 1h6.364a1 1 0 00.942-.673l2.716-6.338A1 1 0 0016 9.577V5.5a2.5 2.5 0 00-2.5-2.5h-1a3.5 3.5 0 00-3.374 2.345L5.5 9.577V10.333z" />
+    </svg>
+);
+
+export const DislikeIcon: React.FC = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+        <path d="M18 9.5a1.5 1.5 0 11-3 0v-6a1.5 1.5 0 013 0v6zM14 9.667V3a1 1 0 00-1-1H6.636a1 1 0 00-.942.673l-2.716 6.338A1 1 0 004 10.423V14.5a2.5 2.5 0 002.5 2.5h1a3.5 3.5 0 003.374-2.345L14.5 10.423V9.667z" />
+    </svg>
+);

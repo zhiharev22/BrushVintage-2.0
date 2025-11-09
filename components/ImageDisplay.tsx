@@ -1,6 +1,6 @@
 import React from 'react';
 import { Spinner } from './Spinner';
-import { FullScreenIcon, SaveIcon, TrashIcon } from './icons';
+import { FullScreenIcon, SaveIcon, TrashIcon, LikeIcon, DislikeIcon } from './icons';
 
 interface ImageDisplayProps {
   imageSrc: string | null;
@@ -13,13 +13,30 @@ interface ImageDisplayProps {
   onDeleteClick: () => void;
   canDelete: boolean;
   isDraggingOver: boolean;
+  onLikeClick?: () => void;
+  onDislikeClick?: () => void;
+  activeFeedback?: 'like' | 'dislike' | null;
 }
 
-export const ImageDisplay: React.FC<ImageDisplayProps> = ({ imageSrc, isLoading, loadingMessage, onFullScreenClick, onSaveClick, aspectRatio, onUploadClick, onDeleteClick, canDelete, isDraggingOver }) => {
+export const ImageDisplay: React.FC<ImageDisplayProps> = ({ 
+    imageSrc, 
+    isLoading, 
+    loadingMessage, 
+    onFullScreenClick, 
+    onSaveClick, 
+    aspectRatio, 
+    onUploadClick, 
+    onDeleteClick, 
+    canDelete, 
+    isDraggingOver,
+    onLikeClick,
+    onDislikeClick,
+    activeFeedback 
+}) => {
 
   return (
     <div
-      className="relative w-full h-[600px] bg-black rounded-[32px] overflow-hidden flex items-center justify-center"
+      className="relative w-full h-[65vh] max-h-[600px] bg-black rounded-[32px] overflow-hidden flex items-center justify-center"
     >
       {isLoading && (
         <div className="absolute inset-0 bg-black/70 backdrop-blur-sm flex flex-col items-center justify-center z-20">
@@ -30,7 +47,7 @@ export const ImageDisplay: React.FC<ImageDisplayProps> = ({ imageSrc, isLoading,
       
       {isDraggingOver && (
         <div className="absolute inset-0 bg-black/20 border-4 border-dashed border-white rounded-[28px] z-30 flex items-center justify-center pointer-events-none">
-          <p className="text-white text-2xl font-bold">Перетащите сюда</p>
+          <p className="text-white text-2xl font-bold">Drop here</p>
         </div>
       )}
 
@@ -38,13 +55,13 @@ export const ImageDisplay: React.FC<ImageDisplayProps> = ({ imageSrc, isLoading,
          <button
            type="button"
            onClick={onUploadClick}
-           className="w-full h-[600px] flex flex-col items-center justify-center text-center text-gray-400 p-4 rounded-[32px] bg-black hover:bg-gray-900 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-black focus:ring-white"
+           className="w-full h-full flex flex-col items-center justify-center text-center text-gray-400 p-4 rounded-[32px] bg-black hover:bg-gray-900 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-black focus:ring-white"
            aria-label="Upload photo"
          >
           <svg xmlns="http://www.w3.org/2000/svg" className="h-16 w-16 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
           </svg>
-          <span className="mt-4 text-lg font-semibold text-gray-500">Загрузить фото</span>
+          <span className="mt-4 text-lg font-semibold text-gray-500">Upload Photo</span>
         </button>
       )}
 
@@ -90,6 +107,29 @@ export const ImageDisplay: React.FC<ImageDisplayProps> = ({ imageSrc, isLoading,
               </button>
             )}
           </div>
+          {onLikeClick && onDislikeClick && (
+            <div className="absolute z-20 bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-3"
+                onClick={(e) => e.stopPropagation()}>
+              <button
+                onClick={onDislikeClick}
+                className={`p-2.5 rounded-full transition-colors duration-200 ${
+                  activeFeedback === 'dislike' ? 'bg-red-500 text-white' : 'bg-black/50 text-white hover:bg-black/70'
+                }`}
+                aria-label="Dislike result and generate a different style"
+              >
+                <DislikeIcon />
+              </button>
+              <button
+                onClick={onLikeClick}
+                className={`p-2.5 rounded-full transition-colors duration-200 ${
+                  activeFeedback === 'like' ? 'bg-green-500 text-white' : 'bg-black/50 text-white hover:bg-black/70'
+                }`}
+                aria-label="Like result and keep a similar style"
+              >
+                <LikeIcon />
+              </button>
+            </div>
+          )}
         </>
       )}
     </div>

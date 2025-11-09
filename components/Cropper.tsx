@@ -97,7 +97,7 @@ export const Cropper: React.FC<CropperProps> = ({ imageUrl, onCropComplete, onCa
     >
       <div className="bg-white rounded-2xl shadow-2xl w-full max-w-4xl max-h-[90vh] flex flex-col">
         <header className="p-6 flex justify-between items-center border-b border-gray-200">
-          <h2 className="text-xl font-bold text-gray-800">Обрезать изображение</h2>
+          <h2 className="text-xl font-bold text-gray-800">Crop Image</h2>
         </header>
 
         <div className="p-6 flex-1 flex flex-col md:flex-row gap-6 min-h-0">
@@ -133,11 +133,11 @@ export const Cropper: React.FC<CropperProps> = ({ imageUrl, onCropComplete, onCa
 
         <footer className="p-6 border-t border-gray-200 flex flex-col sm:flex-row justify-end items-center gap-4">
             <div className="flex items-center gap-4">
-                <ActionButton onClick={onCancel} disabled={false} text="Отмена" variant="outline" />
+                <ActionButton onClick={onCancel} disabled={false} text="Cancel" variant="outline" />
                 <ActionButton
                 onClick={handleCrop}
                 disabled={!crop || crop.width === 0 || crop.height === 0}
-                text="Обрезать и продолжить"
+                text="Crop and Continue"
                 variant="primary"
                 />
             </div>

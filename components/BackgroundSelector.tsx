@@ -36,7 +36,7 @@ export const BackgroundSelector: React.FC<BackgroundSelectorProps> = ({ onClose,
         onClick={(e) => e.stopPropagation()}
       >
         <header className="p-6 flex justify-between items-center border-b border-gray-200">
-          <h2 className="text-xl font-bold text-gray-800">Выберите фон</h2>
+          <h2 className="text-xl font-bold text-gray-800">Choose a Background</h2>
           <button
             onClick={onClose}
             className="text-gray-500 hover:text-gray-800 transition-colors"
@@ -89,7 +89,7 @@ export const BackgroundSelector: React.FC<BackgroundSelectorProps> = ({ onClose,
                 }}
              >
                 <UploadIcon />
-                <span className="mt-2 text-sm font-semibold">Загрузить свой</span>
+                <span className="mt-2 text-sm font-semibold">Upload Your Own</span>
                 <input
                     id="background-upload"
                     type="file"

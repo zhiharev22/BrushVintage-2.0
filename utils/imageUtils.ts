@@ -66,3 +66,58 @@ export const fileToGenerativePart = (file: File | string): Promise<{ generativeP
     }
   });
 };
+
+export const extractColorsFromImage = (imageUrl: string, count: number = 11): Promise<string[]> => {
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      // This is necessary for fetching images from external URLs (like Unsplash) without CORS issues.
+      // For data URLs, it's not strictly needed but doesn't hurt.
+      img.crossOrigin = 'Anonymous';
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        
+        // Scale down the image for faster processing
+        const maxDimension = 100;
+        const scale = Math.min(maxDimension / img.width, maxDimension / img.height, 1);
+        canvas.width = img.width * scale;
+        canvas.height = img.height * scale;
+        
+        const ctx = canvas.getContext('2d');
+        if (!ctx) {
+          return reject(new Error('Could not get canvas context'));
+        }
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        
+        try {
+          const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
+          const colors: string[] = [];
+          const pixelCount = canvas.width * canvas.height;
+          
+          // Sample more pixels to have a better chance of finding non-white colors
+          const sampleCount = count * 3;
+          const step = Math.max(1, Math.floor(pixelCount / sampleCount));
+
+          for (let i = 0; i < pixelCount && colors.length < count; i += step) {
+            const offset = i * 4;
+            const r = imageData[offset];
+            const g = imageData[offset + 1];
+            const b = imageData[offset + 2];
+            
+            // Exclude colors that are too close to white (e.g., all components > 240)
+            if (r < 240 || g < 240 || b < 240) {
+              const hex = `#${('00' + r.toString(16)).slice(-2)}${('00' + g.toString(16)).slice(-2)}${('00' + b.toString(16)).slice(-2)}`;
+              colors.push(hex);
+            }
+          }
+          resolve(colors); // Resolves with an empty array if no suitable colors are found.
+        } catch (e) {
+          // This can happen due to CORS issues if crossOrigin is not set or supported
+          reject(new Error(`Failed to get image data: ${e}`));
+        }
+      };
+      img.onerror = (err) => {
+        reject(err);
+      };
+      img.src = imageUrl;
+    });
+};

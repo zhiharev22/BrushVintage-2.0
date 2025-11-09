@@ -1,5 +1,5 @@
 {
-  "name": "Vintage Brush",
+  "name": "Old Masters",
   "description": "An application that transforms your photos into paintings in the style of the 18th-19th centuries using AI. You can upload a photo, change its background, and then generate the final artwork.",
   "requestFramePermissions": []
 }
